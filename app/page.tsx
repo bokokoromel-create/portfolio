@@ -1,65 +1,67 @@
-import Image from "next/image";
+import { Bebas_Neue, Caveat } from "next/font/google";
+import { HomeHeroMain } from "../components/home-hero-main";
+import { SiteHeader } from "../components/site-header";
+import { mainNav } from "../lib/main-nav";
+import { AboutPreviewSection } from "../components/sections/about-preview-section";
+import { ProjectFeatureSection } from "../components/sections/project-feature-section";
+import { TestimonialsSection } from "../components/sections/testimonials-section";
+import { WhatIDoSection } from "../components/sections/what-i-do-section";
+import { WorkWithMeCtaSection } from "../components/sections/work-with-me-cta-section";
+import { SiteFooter } from "../components/site-footer";
+
+const display = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-display",
+});
+
+const accent = Caveat({
+  weight: "700",
+  subsets: ["latin"],
+  variable: "--font-accent",
+});
+
+const heroLines = ["Développeur", "Web &", "Créatif"];
+
+const heroLineClasses = [
+  "block text-center text-[clamp(2.75rem,14vw,11rem)] tracking-tight",
+  "block text-center text-[clamp(2.5rem,12vw,9.5rem)] tracking-tight",
+  "block text-center text-[clamp(2.75rem,14vw,11rem)] tracking-tight",
+];
+
+const tagline =
+  "Je conçois des interfaces nettes et des expériences web soignées — du concept au déploiement.";
+
+const CONTACT_EMAIL = "bokokoromel@gmail.com";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div
+      className={`${display.variable} ${accent.variable} relative min-h-dvh overflow-x-hidden bg-[#F2EFE9] text-neutral-950`}
+    >
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[45vh] bg-gradient-to-t from-[#E24A2E] from-15% via-[#F2EFE9]/80 via-55% to-transparent"
+        aria-hidden
+      />
+
+      <SiteHeader nav={mainNav} />
+
+      <HomeHeroMain
+        accentClassName={accent.className}
+        heroLines={heroLines}
+        heroLineClasses={heroLineClasses}
+        tagline={tagline}
+      />
+
+      <WhatIDoSection accentClassName={accent.className} />
+      <ProjectFeatureSection accentClassName={accent.className} />
+      <TestimonialsSection accentClassName={accent.className} />
+      <AboutPreviewSection accentClassName={accent.className} />
+      <WorkWithMeCtaSection
+        accentClassName={accent.className}
+        contactEmail={CONTACT_EMAIL}
+      />
+      <SiteFooter nav={mainNav} contactEmail={CONTACT_EMAIL} />
     </div>
   );
 }
