@@ -211,7 +211,7 @@ export function TestimonialsSection({ accentClassName }: TestimonialsSectionProp
     <section
       ref={sectionRef}
       id="temoignages"
-      className="relative bg-[#F4F1EC] px-5 py-24 sm:px-10 sm:py-32 md:py-40"
+      className="section relative bg-[#F4F1EC] px-5 py-24 sm:px-10 sm:py-32 md:py-40"
       aria-labelledby="temoignages-heading"
     >
       <div ref={headerRef} className="mx-auto max-w-4xl text-center">

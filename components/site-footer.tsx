@@ -32,7 +32,7 @@ export function SiteFooter({
       className="section relative overflow-hidden bg-[linear-gradient(180deg,#F2EFE9_0%,#F2EFE9_24%,#e8b09c_52%,#E24A2E_92%,#c73d24_100%)] text-neutral-950"
       aria-labelledby="footer-name-heading"
     >
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-5 pb-10 pt-14 sm:px-8 md:grid-cols-3 md:gap-10 md:pb-6">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-5 pb-[max(2.5rem,calc(2.5rem+env(safe-area-inset-bottom,0px)))] pt-14 sm:px-8 md:grid-cols-3 md:gap-10 md:pb-[max(1.5rem,calc(1.5rem+env(safe-area-inset-bottom,0px)))]">
         <div className="reveal">
           <p className="mb-5 font-sans text-[10px] font-semibold uppercase tracking-[0.28em] text-neutral-600 sm:text-xs">
             (Menu)
@@ -53,7 +53,7 @@ export function SiteFooter({
 
         <div className="reveal">
           <p className="mb-5 font-sans text-[10px] font-semibold uppercase tracking-[0.28em] text-neutral-600 sm:text-xs">
-            (Sociétés sociales)
+            (Réseaux sociaux)
           </p>
           <ul className="flex flex-col gap-3 font-sans text-sm font-medium text-neutral-900">
             {socialLinks.map((item) => (
@@ -87,7 +87,7 @@ export function SiteFooter({
         </div>
       </div>
 
-      <div className="relative px-5 pb-6 sm:px-8">
+      <div className="relative px-5 pb-[max(1.5rem,calc(1.5rem+env(safe-area-inset-bottom,0px)))] sm:px-8">
         <h2
           id="footer-name-heading"
           className="reveal mx-auto max-w-[100vw] text-center font-[family-name:var(--font-display)] text-[clamp(2.75rem,12vw,9.5rem)] font-normal uppercase leading-[0.88] tracking-tight text-neutral-950"

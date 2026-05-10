@@ -30,7 +30,7 @@ type ProcessEditorialSectionsProps = {
 };
 
 /**
- * Ordre demandé : 9 → 5 → 8 → 3 → 4 → 2, puis 6, 7, 10.
+ * Ordre demandé : 9 → 5 → 8 → 3 → 4, puis 6, 10 (retours / lancement dans la section 8 ; confiance (03)(04) dans la section 4).
  */
 export function ProcessEditorialSections({
   accentClassName,
@@ -124,6 +124,16 @@ export function ProcessEditorialSections({
                 body="Je crée des sites performants, pensés pour le référencement, avec une structure claire et un système de contenu adapté. Votre équipe peut mettre à jour services, études de cas et pages sans friction."
               />
             </div>
+            <div className="grid gap-12 border-t border-black pt-12 md:grid-cols-2 md:gap-10 md:pt-14">
+              <Col
+                title="Des retours sans drame"
+                body="Vous voyez le travail par étapes, et non d’un seul coup. Nous affinons au fur et à mesure, avec des cycles de retours clairs, pour que le projet ne se transforme pas en cauchemar de révisions."
+              />
+              <Col
+                title="Lancement et la suite"
+                body="Je ne disparais pas après le lancement. Vous bénéficiez d’une période d’assistance après mise en ligne : corrections, optimisations et repères pour mettre à jour votre contenu sereinement, même en autonomie."
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -168,7 +178,7 @@ export function ProcessEditorialSections({
         </div>
       </section>
 
-      {/* 4 — Note manuscrite + colonne (02)(03) */}
+      {/* 4 — Note manuscrite + grille confiance (03)(04) */}
       <section
         data-reveal-variant="process"
         className="section bg-[#F2EFE9] px-5 py-20 sm:px-10 sm:py-28"
@@ -195,41 +205,18 @@ export function ProcessEditorialSections({
               </p>
             </div>
           </div>
-          <div className="flex flex-col gap-14 lg:col-span-8">
-            <Col
-              num="(02)"
-              title="Votre site web ne vous trouvera pas de clients par magie."
-              body="Un site ne remplace pas une offre solide ni une prospection réfléchie. En revanche, il peut amplifier ce qui fonctionne déjà : clarifier votre message, rassurer, et faire gagner un temps précieux à chaque échange."
-            />
+          <div className="grid gap-12 md:grid-cols-2 md:gap-16 lg:col-span-8 lg:gap-24">
             <Col
               num="(03)"
-              title="Nous cartographions soigneusement votre projet avant de commencer la construction."
-              body="Première étape : une compréhension approfondie de votre activité — ce que vous vendez, qui l’achète et ce qui les convainc. Vous obtenez un plan complet de votre site avant même le début de la conception : structure, objectif et fonction de chaque page."
+              title="Instaure la confiance avant même une seule conversation."
+              body="Les clients constateront que votre site web reflète une entreprise réelle et professionnelle, et non quelque chose de bâclé, ce qui augmentera considérablement leur confiance en vous. Ainsi, vos affirmations concernant votre expertise auront du poids au lieu d’être remises en question."
+            />
+            <Col
+              num="(04)"
+              title="Transforme l’intérêt passager en décisions assurées."
+              body="Le site filtrera les clients non compatibles, tout en rassurant les clients idéaux sur le fait que vous êtes le choix évident. Résultat : des échanges plus courts et des opportunités plus pertinentes et de meilleure qualité."
             />
           </div>
-        </div>
-      </section>
-
-      {/* 2 — Deux colonnes (03) / (04) */}
-      <section
-        data-reveal-variant="process"
-        className="section bg-[#F2EFE9] px-5 py-20 sm:px-10 sm:py-28"
-        aria-labelledby="process-s2-heading"
-      >
-        <h2 id="process-s2-heading" className="sr-only">
-          Confiance et décisions
-        </h2>
-        <div className="mx-auto grid max-w-[1400px] gap-12 md:grid-cols-2 md:gap-16 lg:gap-24">
-          <Col
-            num="(03)"
-            title="Instaure la confiance avant même une seule conversation."
-            body="Les clients constateront que votre site web reflète une entreprise réelle et professionnelle, et non quelque chose de bâclé, ce qui augmentera considérablement leur confiance en vous. Ainsi, vos affirmations concernant votre expertise auront du poids au lieu d’être remises en question."
-          />
-          <Col
-            num="(04)"
-            title="Transforme l’intérêt passager en décisions assurées."
-            body="Le site filtrera les clients non compatibles, tout en rassurant les clients idéaux sur le fait que vous êtes le choix évident. Résultat : des échanges plus courts et des opportunités plus pertinentes et de meilleure qualité."
-          />
         </div>
       </section>
 
@@ -250,27 +237,6 @@ export function ProcessEditorialSections({
           <Col
             title="Des sites web professionnels que vous pouvez facilement mettre à jour"
             body="Je crée des sites performants, pensés pour le référencement, avec une structure claire et un système de contenu adapté. Votre équipe peut mettre à jour services, études de cas et pages sans friction — sans dépendre de moi pour chaque micro-modification."
-          />
-        </div>
-      </section>
-
-      {/* 7 — Deux colonnes retours / lancement */}
-      <section
-        data-reveal-variant="process"
-        className="section bg-[#EAE6DD] px-5 py-20 sm:px-10 sm:py-28"
-        aria-labelledby="process-s7-heading"
-      >
-        <h2 id="process-s7-heading" className="sr-only">
-          Collaboration et après-lancement
-        </h2>
-        <div className="mx-auto grid max-w-[1400px] gap-12 md:grid-cols-2 md:gap-16 lg:gap-24">
-          <Col
-            title="Des retours sans drame"
-            body="Vous voyez le travail par étapes, et non d’un seul coup. Nous affinons au fur et à mesure, avec des cycles de retours clairs, pour que le projet ne se transforme pas en cauchemar de révisions."
-          />
-          <Col
-            title="Lancement et la suite"
-            body="Je ne disparais pas après le lancement. Vous bénéficiez d’une période d’assistance après mise en ligne : corrections, optimisations et repères pour mettre à jour votre contenu sereinement, même en autonomie."
           />
         </div>
       </section>

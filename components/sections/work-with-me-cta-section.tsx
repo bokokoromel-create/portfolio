@@ -14,7 +14,7 @@ export function WorkWithMeCtaSection({
   return (
     <section
       id="contact"
-      className="section relative flex min-h-[min(90svh,880px)] flex-col bg-black px-5 py-20 text-white sm:px-10 sm:py-28"
+      className="section relative flex min-h-[min(90svh,880px)] flex-col bg-black px-5 pb-[max(5rem,calc(5rem+env(safe-area-inset-bottom,0px)))] pt-20 text-white sm:px-10 sm:pb-[max(7rem,calc(7rem+env(safe-area-inset-bottom,0px)))] sm:pt-28"
       aria-labelledby="contact-cta-heading"
     >
       <div className="flex flex-1 flex-col items-center justify-center text-center">
