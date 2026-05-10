@@ -11,12 +11,12 @@ export function AboutPreviewSection({ accentClassName }: AboutPreviewSectionProp
     >
       <h2
         id="about-preview-heading"
-        className="reveal pointer-events-none select-none text-center font-[family-name:var(--font-display)] text-[clamp(2.75rem,calc(11vw+1.25rem),14rem)] font-black uppercase leading-[0.75] tracking-tight text-neutral-950"
+        className="reveal pointer-events-none select-none text-center font-[family-name:var(--font-display)] text-[clamp(4.5rem,22vw,14rem)] font-black uppercase leading-[0.75] tracking-tight text-neutral-950"
       >
         À propos
       </h2>
 
-      <div className="relative z-[1] mx-auto -mt-[clamp(1rem,calc(5vw+0.5rem),5rem)] flex max-w-5xl justify-center px-2 sm:-mt-[clamp(3rem,10vw,7rem)]">
+      <div className="relative z-[1] mx-auto -mt-[clamp(2rem,8vw,5rem)] flex max-w-5xl justify-center px-2 sm:-mt-[clamp(3rem,10vw,7rem)]">
         <figure className="reveal relative w-[min(100%,320px)] rotate-[-4deg] shadow-[8px_16px_40px_rgba(0,0,0,0.12)] sm:w-[min(100%,380px)]">
           <div className="bg-white p-3 pb-10 sm:p-4 sm:pb-12">
             <div

@@ -144,25 +144,27 @@ export function HomeHeroMain({
   return (
     <main
       ref={mainRef}
-      className="relative z-10 mx-auto flex min-h-[min(88dvh,900px)] max-w-[1600px] flex-col items-center px-3 pb-12 pt-2 sm:min-h-[min(100dvh,920px)] sm:px-6 sm:pb-24 sm:pt-6 md:pt-8"
+      className="relative z-10 mx-auto flex min-h-[min(100dvh,920px)] max-w-[1600px] flex-col items-center justify-center px-4 pb-[max(4rem,env(safe-area-inset-bottom,0px)+2rem)] pt-4 max-md:translate-y-[clamp(0.75rem,4vh,2.75rem)] sm:px-6 sm:pb-24 md:justify-start md:translate-y-0 md:pb-24 md:pt-8"
     >
-      <h1 className="relative z-[2] w-full cursor-default select-none px-2 py-4 text-center font-[family-name:var(--font-display)] leading-[0.82] text-neutral-950 pointer-events-none sm:py-10 md:py-16">
-        <MaskedRevealLines
-          lines={heroLines}
-          lineClassNames={heroLineClasses}
-          delay={0.08}
-          stagger={0.14}
-          duration={0.95}
-        />
-      </h1>
+      <div className="flex w-full flex-col items-center">
+        <h1 className="relative z-[2] w-full cursor-default select-none px-2 py-6 text-center font-[family-name:var(--font-display)] leading-[0.82] text-neutral-950 pointer-events-none sm:py-10 md:py-16">
+          <MaskedRevealLines
+            lines={heroLines}
+            lineClassNames={heroLineClasses}
+            delay={0.08}
+            stagger={0.14}
+            duration={0.95}
+          />
+        </h1>
 
-      <MaskedRevealWords
-        text={tagline}
-        className="relative z-[3] max-w-[min(100%,22rem)] cursor-default px-3 text-center font-sans text-[0.8125rem] leading-relaxed text-neutral-700 pointer-events-none sm:max-w-md sm:px-0 sm:text-base"
-        delay={0.52}
-        stagger={0.045}
-        duration={0.62}
-      />
+        <MaskedRevealWords
+          text={tagline}
+          className="relative z-[3] max-w-md cursor-default px-2 text-center font-sans text-sm leading-relaxed text-neutral-700 pointer-events-none max-md:-mt-1 sm:text-base"
+          delay={0.52}
+          stagger={0.045}
+          duration={0.62}
+        />
+      </div>
 
       {stamps.map(({ id, x, y, r, s }) => (
         <div

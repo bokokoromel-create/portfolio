@@ -14,7 +14,7 @@ export function WorkWithMeCtaSection({
   return (
     <section
       id="contact"
-      className="section relative flex min-h-[min(82svh,860px)] flex-col bg-black px-4 py-16 text-white sm:min-h-[min(90svh,880px)] sm:px-10 sm:py-28"
+      className="section relative flex min-h-[min(90svh,880px)] flex-col bg-black px-5 py-20 text-white sm:px-10 sm:py-28"
       aria-labelledby="contact-cta-heading"
     >
       <div className="flex flex-1 flex-col items-center justify-center text-center">
@@ -24,13 +24,13 @@ export function WorkWithMeCtaSection({
 
         <h2
           id="contact-cta-heading"
-          className="max-w-[min(100%,42rem)] px-1 font-[family-name:var(--font-display)] text-[clamp(2.1rem,calc(7.5vw+0.75rem),7rem)] font-normal uppercase leading-[0.92] tracking-tight text-white sm:px-0"
+          className="max-w-[min(100%,42rem)] font-[family-name:var(--font-display)] text-[clamp(2.75rem,12vw,7rem)] font-normal uppercase leading-[0.92] tracking-tight text-white"
         >
           <span className="reveal block">Prêts à</span>
           <span className="reveal mt-1 block sm:mt-2">
             Entendre plus de{" "}
             <span
-              className={`${accentClassName} normal-case text-[clamp(1.85rem,calc(6.5vw+0.65rem),6rem)] tracking-normal text-[#E24A2E]`}
+              className={`${accentClassName} normal-case text-[clamp(2.25rem,10vw,6rem)] tracking-normal text-[#E24A2E]`}
             >
               « OUI »
             </span>{" "}
@@ -40,7 +40,7 @@ export function WorkWithMeCtaSection({
 
         <Link
           href={`mailto:${contactEmail}?subject=Projet%20web`}
-          className="group reveal mt-10 inline-flex max-w-[calc(100vw-2rem)] items-center justify-center rounded-lg bg-white px-6 py-3.5 font-[family-name:var(--font-display)] text-base font-normal uppercase tracking-wide text-black transition-colors duration-300 ease-out hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:mt-12 sm:max-w-none sm:px-12 sm:py-5 sm:text-xl"
+          className="group reveal mt-12 inline-flex items-center justify-center rounded-lg bg-white px-10 py-4 font-[family-name:var(--font-display)] text-lg font-normal uppercase tracking-wide text-black transition-colors duration-300 ease-out hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:px-12 sm:py-5 sm:text-xl"
         >
           <SlideDoubleLabel
             label="Hell oui!"

@@ -24,9 +24,9 @@ const accent = Caveat({
 const heroLines = ["Développeur", "Web &", "Créatif"];
 
 const heroLineClasses = [
-  "block text-center text-[clamp(2rem,calc(5.5vw+0.9rem),11rem)] tracking-tight",
-  "block text-center text-[clamp(1.875rem,calc(4.75vw+0.75rem),9.5rem)] tracking-tight",
-  "block text-center text-[clamp(2rem,calc(5.5vw+0.9rem),11rem)] tracking-tight",
+  "block text-center text-[clamp(2.75rem,14vw,11rem)] tracking-tight",
+  "block text-center text-[clamp(2.5rem,12vw,9.5rem)] tracking-tight",
+  "block text-center text-[clamp(2.75rem,14vw,11rem)] tracking-tight",
 ];
 
 const tagline =
