@@ -9,7 +9,7 @@ export function WhatIDoSection({ accentClassName }: WhatIDoSectionProps) {
   return (
     <section
       id="approche"
-      className="section relative border-t border-neutral-900/10 bg-[#F2EDE4] px-5 py-24 sm:px-10 sm:py-32 md:py-40"
+      className="section relative border-t border-neutral-900/10 bg-[#F2EDE4] px-4 py-16 sm:px-10 sm:py-32 md:py-40"
       aria-labelledby="approche-heading"
     >
       <p
@@ -20,17 +20,19 @@ export function WhatIDoSection({ accentClassName }: WhatIDoSectionProps) {
       </p>
 
       <div className="mx-auto max-w-[1100px] text-center font-[family-name:var(--font-display)] font-black uppercase leading-[0.88] tracking-tight text-neutral-950">
-        <p className="reveal text-[clamp(1.35rem,5.2vw,3.75rem)]">
+        <p className="reveal text-[clamp(1.15rem,calc(4.25vw+0.65rem),3.75rem)]">
           Je conçois des sites pour des
         </p>
-        <p className="reveal text-[clamp(1.35rem,5.2vw,3.75rem)]">
+        <p className="reveal text-[clamp(1.15rem,calc(4.25vw+0.65rem),3.75rem)]">
           entreprises portées par l’expertise —
         </p>
-        <p className="reveal text-[clamp(1.35rem,5.2vw,3.75rem)]">
+        <p className="reveal text-[clamp(1.15rem,calc(4.25vw+0.65rem),3.75rem)]">
           des interfaces qui rendent votre
         </p>
-        <p className="reveal text-[clamp(1.35rem,5.2vw,3.75rem)]">valeur</p>
-        <p className="reveal mt-2 text-[clamp(1.35rem,5.2vw,3.75rem)]">
+        <p className="reveal text-[clamp(1.15rem,calc(4.25vw+0.65rem),3.75rem)]">
+          valeur
+        </p>
+        <p className="reveal mt-2 text-[clamp(1.15rem,calc(4.25vw+0.65rem),3.75rem)]">
           indéniable et le{" "}
           <span className={`${accentClassName} text-[#E24A2E]`}>oui !</span>
         </p>

@@ -8,7 +8,7 @@ export function ProjectFeatureSection({ accentClassName }: ProjectFeatureSection
   return (
     <section
       id="portfolio"
-      className="section relative bg-neutral-950 px-5 py-28 text-white sm:px-10 sm:py-36 md:py-44"
+      className="section relative bg-neutral-950 px-4 py-20 text-white sm:px-10 sm:py-36 md:py-44"
       aria-labelledby="portfolio-feature-heading"
     >
       <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
@@ -28,7 +28,7 @@ export function ProjectFeatureSection({ accentClassName }: ProjectFeatureSection
           </p>
           <h2
             id="portfolio-feature-heading"
-            className="reveal font-[family-name:var(--font-display)] text-[clamp(3.5rem,14vw,8.5rem)] font-black uppercase leading-none tracking-tight"
+            className="reveal font-[family-name:var(--font-display)] text-[clamp(2.6rem,calc(9vw+0.5rem),8.5rem)] font-black uppercase leading-none tracking-tight"
           >
             Estelle
           </h2>
