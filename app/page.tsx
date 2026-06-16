@@ -2,6 +2,7 @@ import { Bebas_Neue, Caveat } from "next/font/google";
 import { HomeHeroMain } from "../components/home-hero-main";
 import { SiteHeader } from "../components/site-header";
 import { mainNav } from "../lib/main-nav";
+import { CONTACT_EMAIL } from "../lib/site";
 import { AboutPreviewSection } from "../components/sections/about-preview-section";
 import { ProjectFeatureSection } from "../components/sections/project-feature-section";
 import { TestimonialsSection } from "../components/sections/testimonials-section";
@@ -31,8 +32,6 @@ const heroLineClasses = [
 
 const tagline =
   "Je conçois des interfaces nettes et des expériences web soignées — du concept au déploiement.";
-
-const CONTACT_EMAIL = "bokokoromel@gmail.com";
 
 export default function Home() {
   return (

@@ -1,8 +1,9 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SiteLogo } from "../site-logo";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,7 +13,7 @@ type TestimonialsSectionProps = {
 
 type Card = {
   quote: string;
-  body: string;
+  body: string | ReactNode;
   name: string;
   role: string;
   x: number;
@@ -30,8 +31,14 @@ type FaqItem = {
 const CARDS: Card[] = [
   {
     quote: "« Une présence premium, sans en faire trop »",
-    body:
-      "RM nous a aidés à passer d’un site Squarespace générique à quelque chose de beaucoup plus raffiné et aligné sur notre niveau. Le rendu est premium sans surcharger, et capture exactement l’équilibre qu’on visait.",
+    body: (
+      <>
+        <SiteLogo asLink={false} className="mr-0.5 inline h-[1em] w-auto align-[-0.1em]" />
+        nous a aidés à passer d’un site Squarespace générique à quelque chose de
+        beaucoup plus raffiné et aligné sur notre niveau. Le rendu est premium
+        sans surcharger, et capture exactement l’équilibre qu’on visait.
+      </>
+    ),
     name: "Ariel",
     role: "Directrice, studio d’intérieur",
     x: -6,

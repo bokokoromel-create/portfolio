@@ -1,3 +1,5 @@
+import { ScrollMaskedLines } from "../scroll/scroll-masked-lines";
+
 type ColBlock = {
   num?: string;
   title: string;
@@ -30,11 +32,17 @@ type ProcessEditorialSectionsProps = {
 };
 
 /**
- * Ordre demandé : 9 → 5 → 8 → 3 → 4, puis 6, 10 (retours / lancement dans la section 8 ; confiance (03)(04) dans la section 4).
+ * Ordre : 9 → 5 → 8 → 3 → 10 → 4 → 6.
  */
 export function ProcessEditorialSections({
   accentClassName,
 }: ProcessEditorialSectionsProps) {
+  const statementLineClass =
+    "font-[family-name:var(--font-display)] text-[clamp(2rem,7.5vw,5rem)] font-normal uppercase leading-[0.88] tracking-tight text-black sm:text-[clamp(2.25rem,6.5vw,5.5rem)]";
+
+  const heroTitleLineClass =
+    "block font-[family-name:var(--font-display)] text-[clamp(2.5rem,9vw,6.5rem)] font-normal uppercase leading-[0.82] tracking-tight";
+
   return (
     <>
       {/* 9 — Centré typographique (en premier) */}
@@ -44,19 +52,33 @@ export function ProcessEditorialSections({
         className="section flex flex-col items-center justify-center bg-[#F2EEE4] px-5 py-24 text-center sm:px-10 sm:py-32"
         aria-labelledby="process-s9-heading"
       >
-        <h2
-          id="process-s9-heading"
-          className="reveal max-w-[min(96vw,920px)] font-[family-name:var(--font-display)] text-[clamp(2rem,7.5vw,5rem)] font-normal uppercase leading-[0.88] tracking-tight text-black sm:text-[clamp(2.25rem,6.5vw,5.5rem)]"
-        >
-          <span
-            className={`${accentClassName} mr-2 inline-block align-middle text-[clamp(2.5rem,9vw,6rem)] font-bold text-[#E24A2E] sm:mr-3`}
-          >
-            80%
-          </span>
-          <span className="align-middle">
-            de la réussite d&apos;un site, c&apos;est la clarté du message — le
-            reste, c&apos;est l&apos;exécution.
-          </span>
+        <h2 id="process-s9-heading" className="max-w-[min(96vw,920px)]">
+          <ScrollMaskedLines
+            lines={[
+              {
+                key: "s9-line-1",
+                content: (
+                  <>
+                    <span
+                      className={`${accentClassName} mr-2 inline-block text-[clamp(2.5rem,9vw,6rem)] font-bold text-[#E24A2E] sm:mr-3`}
+                    >
+                      80%
+                    </span>
+                    DE LA RÉUSSITE D&apos;UN SITE,
+                  </>
+                ),
+              },
+              "C'EST LA CLARTÉ DU MESSAGE — LE",
+              "RESTE, C'EST L'EXÉCUTION.",
+            ]}
+            lineClassNames={[
+              statementLineClass,
+              statementLineClass,
+              statementLineClass,
+            ]}
+            stagger={0.16}
+            scrollStart="top 78%"
+          />
         </h2>
       </section>
 
@@ -66,15 +88,30 @@ export function ProcessEditorialSections({
         className="section flex flex-col items-center justify-center bg-[#F2ECE4] px-5 py-24 text-center text-black sm:px-10 sm:py-32"
         aria-labelledby="process-s5-heading"
       >
-        <p
-          className={`reveal ${accentClassName} mb-6 max-w-2xl text-xl text-[#E24A2E] sm:text-2xl md:text-3xl`}
-          id="process-s5-heading"
-        >
-          Je vous construis un système
-        </p>
-        <h2 className="reveal max-w-[min(96vw,900px)] font-[family-name:var(--font-display)] text-[clamp(2.5rem,9vw,6.5rem)] font-normal uppercase leading-[0.82] tracking-tight">
-          <span className="block">Qui fonctionne</span>
-          <span className="block">Pour votre activité</span>
+        <h2 id="process-s5-heading" className="max-w-[min(96vw,900px)]">
+          <ScrollMaskedLines
+            lines={[
+              {
+                key: "s5-intro",
+                content: (
+                  <span
+                    className={`${accentClassName} mb-2 block text-xl font-normal normal-case text-[#E24A2E] sm:mb-3 sm:text-2xl md:text-3xl`}
+                  >
+                    Je vous construis un système
+                  </span>
+                ),
+              },
+              "Qui fonctionne",
+              "Pour votre activité",
+            ]}
+            lineClassNames={[
+              "font-normal",
+              heroTitleLineClass,
+              heroTitleLineClass,
+            ]}
+            stagger={0.14}
+            scrollStart="top 78%"
+          />
         </h2>
       </section>
 
@@ -174,7 +211,58 @@ export function ProcessEditorialSections({
               title="Votre site web ne vous trouvera pas de clients par magie."
               body="Un site ne remplace pas une offre solide ni une prospection réfléchie. En revanche, il peut amplifier ce qui fonctionne déjà : clarifier votre message, rassurer, et faire gagner un temps précieux à chaque échange."
             />
+            <Col
+              num="(03)"
+              title="Modèles commerciaux défaillants — restent défaillants"
+              body="Un beau site web ne saurait compenser de mauvaises bases commerciales. Si votre positionnement est erroné, vos prix incohérents ou votre service ne répond pas aux besoins de votre clientèle, le design ne vous sauvera pas. Il met en valeur la valeur, il ne la crée pas."
+            />
           </div>
+        </div>
+      </section>
+
+      {/* 10 — En-tête deux tons + grille (01)(02) */}
+      <section
+        data-reveal-variant="process"
+        className="section bg-[#F2F0E9] px-5 py-20 sm:px-10 sm:py-28"
+        aria-labelledby="process-s10-heading"
+      >
+        <h2
+          id="process-s10-heading"
+          className="mx-auto mb-16 max-w-4xl text-center font-normal lg:mb-20"
+        >
+          <ScrollMaskedLines
+            lines={[
+              "Un site aligné",
+              {
+                key: "s10-accent",
+                content: (
+                  <span
+                    className={`${accentClassName} text-[clamp(2rem,7vw,4rem)] font-bold normal-case leading-none text-[#E24A2E]`}
+                  >
+                    Sur votre niveau
+                  </span>
+                ),
+              },
+            ]}
+            lineClassNames={[
+              "block font-[family-name:var(--font-display)] text-[clamp(2.25rem,8vw,4.5rem)] uppercase leading-[0.9] tracking-tight text-black",
+              "mt-2 block",
+            ]}
+            stagger={0.12}
+            scrollStart="top 80%"
+          />
+        </h2>
+        <div className="mx-auto grid max-w-[1400px] gap-12 md:grid-cols-2 md:gap-16 lg:gap-24">
+          <Col
+            num="(01)"
+            title="Un site web qui comble le fossé de perception"
+            body="Un site conçu avec exigence évite l’effet « bas de gamme ». Hiérarchie claire, formulations nettes, preuves visibles : tout respire la qualité de votre travail avant même le premier échange."
+          />
+          <Col
+            num="(02)"
+            title="Plus besoin de vous justifier."
+            body="Le site raconte une histoire cohérente et montre votre expertise sans surcharger. Vous passez moins de temps à expliquer votre valeur en rendez-vous : elle est déjà comprise."
+          />
         </div>
       </section>
 
@@ -237,39 +325,6 @@ export function ProcessEditorialSections({
           <Col
             title="Des sites web professionnels que vous pouvez facilement mettre à jour"
             body="Je crée des sites performants, pensés pour le référencement, avec une structure claire et un système de contenu adapté. Votre équipe peut mettre à jour services, études de cas et pages sans friction — sans dépendre de moi pour chaque micro-modification."
-          />
-        </div>
-      </section>
-
-      {/* 10 — En-tête deux tons + grille (01)(02) */}
-      <section
-        data-reveal-variant="process"
-        className="section bg-[#F2F0E9] px-5 py-20 sm:px-10 sm:py-28"
-        aria-labelledby="process-s10-heading"
-      >
-        <h2
-          id="process-s10-heading"
-          className="mx-auto mb-16 max-w-4xl text-center font-normal lg:mb-20"
-        >
-          <span className="reveal block font-[family-name:var(--font-display)] text-[clamp(2.25rem,8vw,4.5rem)] uppercase leading-[0.9] tracking-tight text-black">
-            Un site aligné
-          </span>
-          <span
-            className={`reveal mt-2 block ${accentClassName} text-[clamp(2rem,7vw,4rem)] font-bold leading-none text-[#E24A2E]`}
-          >
-            Sur votre niveau
-          </span>
-        </h2>
-        <div className="mx-auto grid max-w-[1400px] gap-12 md:grid-cols-2 md:gap-16 lg:gap-24">
-          <Col
-            num="(01)"
-            title="Un site web qui comble le fossé de perception"
-            body="Un site conçu avec exigence évite l’effet « bas de gamme ». Hiérarchie claire, formulations nettes, preuves visibles : tout respire la qualité de votre travail avant même le premier échange."
-          />
-          <Col
-            num="(02)"
-            title="Plus besoin de vous justifier."
-            body="Le site raconte une histoire cohérente et montre votre expertise sans surcharger. Vous passez moins de temps à expliquer votre valeur en rendez-vous : elle est déjà comprise."
           />
         </div>
       </section>

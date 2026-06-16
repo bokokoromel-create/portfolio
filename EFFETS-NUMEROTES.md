@@ -79,7 +79,7 @@ Liste des effets visuels, animations et interactions actuellement présents dans
 
 ## Boutons / liens type CTA
 
-13. **Bouton CTA contact « Hell oui ! »**  
+13. **Bouton CTA contact « Dis oui ! »**  
     Même `SlideDoubleLabel` que le header + survol `hover:bg-neutral-100` sur le bouton blanc.  
     (`components/sections/work-with-me-cta-section.tsx`)
 

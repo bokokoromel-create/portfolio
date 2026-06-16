@@ -29,14 +29,16 @@ export function SectionRevealInit() {
         const elements = section.querySelectorAll(".reveal");
         if (!elements.length) return;
 
-        const isProcess = section.dataset.revealVariant === "process";
-        const slideX = isProcess
+        const isEditorial =
+          section.dataset.revealVariant === "process" ||
+          section.dataset.revealVariant === "about";
+        const slideX = isEditorial
           ? processSectionIndex++ % 2 === 0
             ? -44
             : 44
           : 0;
 
-        const fromVars = isProcess
+        const fromVars = isEditorial
           ? {
               x: slideX,
               y: 52,
@@ -50,7 +52,7 @@ export function SectionRevealInit() {
               clipPath: "inset(100% 0 0 0)",
             };
 
-        const toVars = isProcess
+        const toVars = isEditorial
           ? {
               x: 0,
               y: 0,

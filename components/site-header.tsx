@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { SiteLogo } from "./site-logo";
 import { SlideDoubleLabel } from "./slide-double-label";
 
 const SCROLL_THRESHOLD = 40;
@@ -81,14 +82,12 @@ export function SiteHeader({ nav }: SiteHeaderProps) {
       }`}
     >
       <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-5 sm:px-8">
-        <Link
-          href="/"
-          className={`font-sans font-bold tracking-tight text-neutral-950 transition-[font-size] duration-300 ease-out ${
-            scrolled ? "text-lg sm:text-xl" : "text-xl sm:text-2xl"
+        <SiteLogo
+          priority
+          className={`w-auto object-contain object-left transition-[height] duration-300 ease-out ${
+            scrolled ? "h-7 sm:h-8" : "h-8 sm:h-9"
           }`}
-        >
-          RM
-        </Link>
+        />
 
         <nav
           className={`absolute left-1/2 hidden -translate-x-1/2 font-sans font-medium uppercase tracking-[0.2em] text-neutral-900 transition-[font-size,letter-spacing] duration-300 ease-out md:flex ${

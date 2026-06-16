@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { NavigationLoadProvider } from "../components/navigation-load-provider";
 import { SmoothScrollProvider } from "../components/scroll/smooth-scroll-provider";
 import "./globals.css";
 
@@ -14,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "RM — Portfolio",
+  title: "Portfolio — Romel Matsonda",
   description: "Portfolio — design web et développement créatif.",
 };
 
@@ -29,7 +30,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <NavigationLoadProvider>
+          <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        </NavigationLoadProvider>
       </body>
     </html>
   );

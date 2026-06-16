@@ -1,3 +1,5 @@
+import { SiteLogo } from "../site-logo";
+
 type AboutPreviewSectionProps = {
   accentClassName: string;
 };
@@ -26,7 +28,6 @@ export function AboutPreviewSection({ accentClassName }: AboutPreviewSectionProp
               <picture className="absolute inset-0 block h-full w-full">
                 <source srcSet="/ro.HEIC" type="image/heic" />
                 <source srcSet="/ro.HEIC" type="image/heif" />
-                {/* eslint-disable-next-line @next/next/no-img-element -- HEIC hors pipeline sharp */}
                 <img
                   src="/Ro.jpg"
                   alt="Portrait — Romel Matsonda"
@@ -44,9 +45,10 @@ export function AboutPreviewSection({ accentClassName }: AboutPreviewSectionProp
 
       <div className="relative z-[2] mx-auto mt-12 grid max-w-6xl gap-10 font-sans text-sm leading-relaxed text-neutral-800 sm:mt-16 sm:grid-cols-2 sm:gap-16 sm:text-[15px] md:text-base">
         <p className="reveal sm:pr-4">
-          Bonjour, je suis RM. Je crée des sites web qui positionnent les
-          métiers de l’expertise comme le choix évident — sans sur-expliquer ni
-          sur-vendre.
+          Bonjour, je suis{" "}
+          <SiteLogo asLink={false} className="mx-0.5 inline h-[1.1em] w-auto align-[-0.12em]" />
+          . Je crée des sites web qui positionnent les métiers de l’expertise
+          comme le choix évident — sans sur-expliquer ni sur-vendre.
         </p>
         <p className="reveal sm:pl-4">
           La plupart des sites des entreprises fondées sur l’expertise

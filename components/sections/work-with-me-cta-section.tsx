@@ -1,15 +1,15 @@
 import Link from "next/link";
+import { CONTACT_EMAIL } from "@/lib/site";
 import { SlideDoubleLabel } from "../slide-double-label";
 
 type WorkWithMeCtaSectionProps = {
   accentClassName: string;
-  /** Remplace par ton adresse e-mail réelle. */
   contactEmail?: string;
 };
 
 export function WorkWithMeCtaSection({
   accentClassName,
-  contactEmail = "hello@example.com",
+  contactEmail = CONTACT_EMAIL,
 }: WorkWithMeCtaSectionProps) {
   return (
     <section
@@ -43,7 +43,7 @@ export function WorkWithMeCtaSection({
           className="group reveal mt-12 inline-flex items-center justify-center rounded-lg bg-white px-10 py-4 font-[family-name:var(--font-display)] text-lg font-normal uppercase tracking-wide text-black transition-colors duration-300 ease-out hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:px-12 sm:py-5 sm:text-xl"
         >
           <SlideDoubleLabel
-            label="Hell oui!"
+            label="Dis oui!"
             lineClassName="items-center justify-center"
           />
         </Link>

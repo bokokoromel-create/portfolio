@@ -30,6 +30,7 @@ export function MaskedRevealLines({
   className?: string;
 }) {
   const rootRef = useRef<HTMLDivElement>(null);
+  const linesKey = lines.join("\u0001");
 
   useLayoutEffect(() => {
     const root = rootRef.current;
@@ -55,7 +56,7 @@ export function MaskedRevealLines({
     }, root);
 
     return () => ctx.revert();
-  }, [lines.join("\u0001"), delay, stagger, duration]);
+  }, [linesKey, delay, stagger, duration]);
 
   return (
     <div ref={rootRef} className={className}>

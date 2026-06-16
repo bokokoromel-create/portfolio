@@ -52,9 +52,19 @@ body {
   animation: oui-stamp-pop 1.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+@keyframes load-ring-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-load-ring-spin {
+  animation: load-ring-spin 0.9s linear infinite;
+  transform-origin: center;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .oui-stamp-label {
+  .animate-load-ring-spin {
     animation: none;
-    opacity: 0.85;
   }
 }
