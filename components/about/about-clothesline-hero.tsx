@@ -161,7 +161,7 @@ function SwingingPolaroid({
 
   return (
     <div
-      className={`relative z-0 w-[min(42vw,260px)] shrink-0 sm:w-[min(36vw,300px)] md:w-[min(32vw,340px)] ${offset}`}
+      className={`relative z-0 w-[min(28vw,200px)] shrink-0 sm:w-[min(36vw,260px)] md:w-[min(32vw,340px)] ${offset}`}
     >
       <div
         ref={swingRef}
@@ -198,10 +198,10 @@ export function AboutClotheslineHero() {
   return (
     <section
       data-reveal-variant="about"
-      className="section relative bg-[#E24A2E] px-5 pb-24 pt-28 sm:px-10 sm:pb-32 sm:pt-36"
+      className="section relative bg-[#E24A2E] px-4 pb-20 pt-24 sm:px-10 sm:pb-32 sm:pt-36"
       aria-label="Galerie à propos"
     >
-      <div className="relative mx-auto h-[min(62vh,640px)] max-w-7xl overflow-visible sm:h-[min(68vh,720px)]">
+      <div className="relative mx-auto h-[min(58vh,560px)] max-w-7xl overflow-visible sm:h-[min(68vh,720px)]">
         <svg
           className="pointer-events-none absolute inset-x-[-5%] top-[4%] h-[160px] w-[110%] sm:top-[3%] sm:h-[200px]"
           viewBox="0 0 1000 180"
@@ -217,7 +217,7 @@ export function AboutClotheslineHero() {
           />
         </svg>
 
-        <div className="absolute inset-x-0 top-[14%] flex items-start justify-center gap-4 overflow-visible py-6 sm:top-[12%] sm:gap-8 sm:py-10 md:gap-12">
+        <div className="absolute inset-x-0 top-[14%] flex items-start justify-center gap-2 overflow-visible py-4 sm:top-[12%] sm:gap-8 sm:py-10 md:gap-12">
           {POLAROIDS.map((photo) => (
             <SwingingPolaroid key={photo.src} {...photo} />
           ))}

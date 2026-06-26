@@ -21,11 +21,29 @@ export function SmoothScrollProvider({
       autoRaf: false,
     });
 
-    const onLenisScroll = (instance: Lenis) => {
+    ScrollTrigger.scrollerProxy(document.documentElement, {
+      scrollTop(value) {
+        if (arguments.length && value !== undefined) {
+          lenis.scrollTo(value, { immediate: true });
+        }
+        return lenis.scroll;
+      },
+      getBoundingClientRect() {
+        return {
+          top: 0,
+          left: 0,
+          width: window.innerWidth,
+          height: window.innerHeight,
+        };
+      },
+      pinType: "transform",
+    });
+
+    const onLenisScroll = () => {
       ScrollTrigger.update();
       window.dispatchEvent(
         new CustomEvent("lenis:scroll", {
-          detail: { scroll: instance.scroll },
+          detail: { scroll: lenis.scroll },
         }),
       );
     };
@@ -45,13 +63,14 @@ export function SmoothScrollProvider({
     const rafId = requestAnimationFrame(() => {
       ScrollTrigger.refresh();
     });
-    const t = window.setTimeout(() => ScrollTrigger.refresh(), 200);
+    const t = window.setTimeout(() => ScrollTrigger.refresh(), 300);
 
     return () => {
       cancelAnimationFrame(rafId);
       window.clearTimeout(t);
       unsubscribeLenisScroll();
       ScrollTrigger.removeEventListener("refresh", onRefresh);
+      ScrollTrigger.scrollerProxy(document.documentElement, {});
       gsap.ticker.remove(tickerFn);
       lenis.destroy();
     };

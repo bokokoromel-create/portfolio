@@ -14,7 +14,7 @@ export function WorkWithMeCtaSection({
   return (
     <section
       id="contact"
-      className="section relative flex min-h-[min(90svh,880px)] flex-col bg-black px-5 pb-[max(5rem,calc(5rem+env(safe-area-inset-bottom,0px)))] pt-20 text-white sm:px-10 sm:pb-[max(7rem,calc(7rem+env(safe-area-inset-bottom,0px)))] sm:pt-28"
+      className="section relative flex min-h-[min(80svh,760px)] flex-col bg-black px-4 pb-[max(4rem,calc(4rem+env(safe-area-inset-bottom,0px)))] pt-16 text-white sm:min-h-[min(90svh,880px)] sm:px-10 sm:pb-[max(7rem,calc(7rem+env(safe-area-inset-bottom,0px)))] sm:pt-28"
       aria-labelledby="contact-cta-heading"
     >
       <div className="flex flex-1 flex-col items-center justify-center text-center">
@@ -24,7 +24,7 @@ export function WorkWithMeCtaSection({
 
         <h2
           id="contact-cta-heading"
-          className="max-w-[min(100%,42rem)] font-[family-name:var(--font-display)] text-[clamp(2.75rem,12vw,7rem)] font-normal uppercase leading-[0.92] tracking-tight text-white"
+          className="max-w-[min(100%,42rem)] font-[family-name:var(--font-display)] text-[clamp(2.25rem,10vw,7rem)] font-normal uppercase leading-[0.92] tracking-tight text-white"
         >
           <span className="reveal block">Prêts à</span>
           <span className="reveal mt-1 block sm:mt-2">

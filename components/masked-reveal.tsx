@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, type ReactNode } from "react";
 import gsap from "gsap";
 
 type MotionPrefs = {
@@ -9,9 +9,22 @@ type MotionPrefs = {
   duration?: number;
 };
 
+export type MaskedRevealLine =
+  | string
+  | {
+      key: string;
+      content: ReactNode;
+    };
+
 function prefersReducedMotion(): boolean {
   if (typeof window === "undefined") return false;
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function normalizeLines(lines: MaskedRevealLine[]) {
+  return lines.map((line, i) =>
+    typeof line === "string" ? { key: `line-${i}`, content: line } : line,
+  );
 }
 
 export function MaskedRevealLines({
@@ -23,14 +36,14 @@ export function MaskedRevealLines({
   stagger = 0.14,
   duration = 0.95,
 }: MotionPrefs & {
-  lines: string[];
+  lines: MaskedRevealLine[];
   lineClassName?: string;
-  /** Si fourni, une classe par ligne (prioritaire sur `lineClassName`). */
   lineClassNames?: string[];
   className?: string;
 }) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const linesKey = lines.join("\u0001");
+  const normalizedLines = normalizeLines(lines);
+  const linesKey = normalizedLines.map((line) => line.key).join("\u0001");
 
   useLayoutEffect(() => {
     const root = rootRef.current;
@@ -60,14 +73,14 @@ export function MaskedRevealLines({
 
   return (
     <div ref={rootRef} className={className}>
-      {lines.map((line, i) => (
-        <div key={`${line}-${i}`} className="overflow-hidden">
+      {normalizedLines.map(({ key, content }, i) => (
+        <div key={key} className="overflow-hidden">
           <div
             data-mask-inner
             className={lineClassNames?.[i] ?? lineClassName}
             style={{ willChange: "transform" }}
           >
-            {line}
+            {content}
           </div>
         </div>
       ))}

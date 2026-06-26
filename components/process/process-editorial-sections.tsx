@@ -8,19 +8,27 @@ type ColBlock = {
 
 function Col({ num, title, body }: ColBlock) {
   const paras = Array.isArray(body) ? body : [body];
+  const titleLineClass =
+    "text-balance font-[family-name:var(--font-display)] text-xl font-normal uppercase leading-[0.95] tracking-tight text-black sm:text-2xl md:text-3xl lg:text-[clamp(1.75rem,2.8vw,2.75rem)]";
+
   return (
-    <div className="reveal border-t border-black pt-8 sm:pt-10">
+    <div className="border-t border-black pt-8 sm:pt-10">
       {num ? (
-        <p className="font-sans text-xs font-medium text-black">{num}</p>
+        <p className="reveal font-sans text-xs font-medium text-black">{num}</p>
       ) : null}
-      <h2
-        className={`font-[family-name:var(--font-display)] text-2xl font-normal uppercase leading-[0.95] tracking-tight text-black sm:text-3xl md:text-[clamp(1.75rem,2.8vw,2.75rem)] ${num ? "mt-4" : "mt-6"}`}
-      >
-        {title}
+      <h2 className={num ? "mt-4" : "mt-6"}>
+        <ScrollMaskedLines
+          lines={[title]}
+          lineClassName={titleLineClass}
+          scrollStart="top 86%"
+          stagger={0.1}
+        />
       </h2>
       <div className="mt-5 space-y-4 font-sans text-sm leading-relaxed text-black sm:text-[15px]">
         {paras.map((p, i) => (
-          <p key={i}>{p}</p>
+          <p key={i} className="reveal">
+            {p}
+          </p>
         ))}
       </div>
     </div>
@@ -38,10 +46,10 @@ export function ProcessEditorialSections({
   accentClassName,
 }: ProcessEditorialSectionsProps) {
   const statementLineClass =
-    "font-[family-name:var(--font-display)] text-[clamp(2rem,7.5vw,5rem)] font-normal uppercase leading-[0.88] tracking-tight text-black sm:text-[clamp(2.25rem,6.5vw,5.5rem)]";
+    "text-balance font-[family-name:var(--font-display)] text-[clamp(1.65rem,6.5vw,5rem)] font-normal uppercase leading-[0.9] tracking-tight text-black sm:text-[clamp(2rem,7.5vw,5rem)] md:text-[clamp(2.25rem,6.5vw,5.5rem)]";
 
   const heroTitleLineClass =
-    "block font-[family-name:var(--font-display)] text-[clamp(2.5rem,9vw,6.5rem)] font-normal uppercase leading-[0.82] tracking-tight";
+    "block text-balance font-[family-name:var(--font-display)] text-[clamp(2rem,8vw,6.5rem)] font-normal uppercase leading-[0.82] tracking-tight";
 
   return (
     <>
@@ -49,7 +57,7 @@ export function ProcessEditorialSections({
       <section
         id="process-section-2"
         data-reveal-variant="process"
-        className="section flex flex-col items-center justify-center bg-[#F2EEE4] px-5 py-24 text-center sm:px-10 sm:py-32"
+        className="section flex flex-col items-center justify-center bg-[#F2EEE4] px-4 py-16 text-center sm:px-10 sm:py-24 md:py-32"
         aria-labelledby="process-s9-heading"
       >
         <h2 id="process-s9-heading" className="max-w-[min(96vw,920px)]">
@@ -85,7 +93,7 @@ export function ProcessEditorialSections({
       {/* 5 — Centré : ligne script + titrage massif */}
       <section
         data-reveal-variant="process"
-        className="section flex flex-col items-center justify-center bg-[#F2ECE4] px-5 py-24 text-center text-black sm:px-10 sm:py-32"
+        className="section flex flex-col items-center justify-center bg-[#F2ECE4] px-4 py-16 text-center text-black sm:px-10 sm:py-24 md:py-32"
         aria-labelledby="process-s5-heading"
       >
         <h2 id="process-s5-heading" className="max-w-[min(96vw,900px)]">
@@ -118,10 +126,10 @@ export function ProcessEditorialSections({
       {/* 8 — Split « Comment je travaille » + grille 2×2 */}
       <section
         data-reveal-variant="process"
-        className="section bg-[#F2EDE4] px-5 py-20 sm:px-10 sm:py-28"
+        className="section bg-[#F2EDE4] px-4 py-16 sm:px-10 sm:py-24 md:py-28"
         aria-labelledby="process-s8-heading"
       >
-        <div className="mx-auto grid max-w-[1400px] gap-16 lg:grid-cols-12 lg:gap-12">
+        <div className="mx-auto grid max-w-[1400px] gap-10 sm:gap-14 lg:grid-cols-12 lg:gap-12">
           <div className="reveal lg:col-span-5">
             <p
               id="process-s8-heading"
@@ -178,7 +186,7 @@ export function ProcessEditorialSections({
       {/* 3 — Split : visuel gauche + (01)(02) */}
       <section
         data-reveal-variant="process"
-        className="section bg-[#F2EFE6] px-5 py-20 sm:px-10 sm:py-28"
+        className="section bg-[#F2EFE6] px-4 py-16 sm:px-10 sm:py-24 md:py-28"
         aria-labelledby="process-s3-heading"
       >
         <div className="mx-auto grid max-w-[1400px] gap-14 lg:grid-cols-12 lg:gap-16">
@@ -186,12 +194,12 @@ export function ProcessEditorialSections({
             <h2 id="process-s3-heading" className="sr-only">
               Réalité
             </h2>
-            <div className="relative inline-block max-w-full">
-              <p className="font-[family-name:var(--font-display)] text-[clamp(4rem,14vw,9rem)] font-normal uppercase leading-[0.82] tracking-tight text-black">
+            <div className="relative max-w-full sm:inline-block">
+              <p className="font-[family-name:var(--font-display)] text-[clamp(2.75rem,12vw,9rem)] font-normal uppercase leading-[0.82] tracking-tight text-black">
                 Réalité
               </p>
               <span
-                className={`${accentClassName} absolute bottom-[8%] right-[-4%] z-[1] text-[clamp(2.25rem,8vw,5rem)] font-bold leading-none text-[#E24A2E] sm:right-[-8%]`}
+                className={`${accentClassName} mt-1 block text-[clamp(1.75rem,7vw,5rem)] font-bold leading-none text-[#E24A2E] sm:absolute sm:bottom-[8%] sm:right-[-8%] sm:mt-0`}
               >
                 Vérifier
               </span>
@@ -223,7 +231,7 @@ export function ProcessEditorialSections({
       {/* 10 — En-tête deux tons + grille (01)(02) */}
       <section
         data-reveal-variant="process"
-        className="section bg-[#F2F0E9] px-5 py-20 sm:px-10 sm:py-28"
+        className="section bg-[#F2F0E9] px-4 py-16 sm:px-10 sm:py-24 md:py-28"
         aria-labelledby="process-s10-heading"
       >
         <h2
@@ -269,7 +277,7 @@ export function ProcessEditorialSections({
       {/* 4 — Note manuscrite + grille confiance (03)(04) */}
       <section
         data-reveal-variant="process"
-        className="section bg-[#F2EFE9] px-5 py-20 sm:px-10 sm:py-28"
+        className="section bg-[#F2EFE9] px-4 py-16 sm:px-10 sm:py-24 md:py-28"
         aria-labelledby="process-s4-heading"
       >
         <h2 id="process-s4-heading" className="sr-only">
@@ -311,7 +319,7 @@ export function ProcessEditorialSections({
       {/* 6 — Deux colonnes (prix / CMS) */}
       <section
         data-reveal-variant="process"
-        className="section bg-[#F2EFE9] px-5 py-20 sm:px-10 sm:py-28"
+        className="section bg-[#F2EFE9] px-4 py-16 sm:px-10 sm:py-24 md:py-28"
         aria-labelledby="process-s6-heading"
       >
         <h2 id="process-s6-heading" className="sr-only">
