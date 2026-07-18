@@ -101,6 +101,9 @@ function ProjectSlide({
           </p>
           <Link
             href={project.href}
+            {...(project.href.startsWith("http")
+              ? { target: "_blank", rel: "noopener noreferrer" }
+              : {})}
             className="mt-6 inline-block border border-white bg-white px-6 py-2.5 font-sans text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-950 transition-colors hover:bg-transparent hover:text-white sm:mt-8 sm:px-7 sm:py-3 sm:text-[11px]"
           >
             Voir le projet

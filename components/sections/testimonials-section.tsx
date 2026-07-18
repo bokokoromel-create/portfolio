@@ -1,6 +1,12 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SiteLogo } from "../site-logo";
@@ -16,10 +22,6 @@ type Card = {
   body: string | ReactNode;
   name: string;
   role: string;
-  x: number;
-  y: number;
-  rotate: number;
-  z: number;
 };
 
 type FaqItem = {
@@ -41,32 +43,18 @@ const CARDS: Card[] = [
     ),
     name: "Ariel",
     role: "Directrice, studio d’intérieur",
-    x: -6,
-    y: 22,
-    rotate: -5.5,
-    z: 10,
   },
   {
     quote: "« Enfin un site à la hauteur de notre activité »",
-    body:
-      "Process clair, collaboration simple, et un résultat qui nous ressemble : professionnel, confiant, fidèle à ce qu’on fait au quotidien.",
+    body: "Process clair, collaboration simple, et un résultat qui nous ressemble : professionnel, confiant, fidèle à ce qu’on fait au quotidien.",
     name: "Khris",
     role: "Fondateur, agence marketing",
-    x: 14,
-    y: -6,
-    rotate: 4.2,
-    z: 20,
   },
   {
     quote: "« Du générique au niveau au-dessus »",
-    body:
-      "La différence s’est vue tout de suite : un site plus focalisé, plus premium, et en phase avec la qualité de nos missions.",
+    body: "La différence s’est vue tout de suite : un site plus focalisé, plus premium, et en phase avec la qualité de nos missions.",
     name: "Clara",
     role: "Fondatrice, cabinet conseil",
-    x: -18,
-    y: -42,
-    rotate: -2.8,
-    z: 30,
   },
 ];
 
@@ -115,27 +103,252 @@ const FAQ_ITEMS: FaqItem[] = [
   },
 ];
 
+const STACK_OFFSETS = [
+  { x: 0, y: 0, rotate: -2.5, scale: 1 },
+  { x: 18, y: 28, rotate: 3.5, scale: 0.97 },
+  { x: -14, y: 56, rotate: -1.5, scale: 0.94 },
+] as const;
+
+function prefersReducedMotion() {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function TestimonialDeck({ accentClassName }: { accentClassName: string }) {
+  const deckRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const dragStartX = useRef<number | null>(null);
+  const dragDeltaX = useRef(0);
+  const isDragging = useRef(false);
+  const wheelLock = useRef(false);
+
+  const count = CARDS.length;
+
+  const goTo = useCallback(
+    (next: number) => {
+      const wrapped = ((next % count) + count) % count;
+      setActiveIndex(wrapped);
+    },
+    [count],
+  );
+
+  const goNext = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo]);
+  const goPrev = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo]);
+
+  useLayoutEffect(() => {
+    const deck = deckRef.current;
+    if (!deck) return;
+
+    const cards = deck.querySelectorAll<HTMLElement>("[data-testimonial-card]");
+    const reduced = prefersReducedMotion();
+
+    cards.forEach((card) => {
+      const visualIndex = Number(card.dataset.stack ?? 0);
+      const offset =
+        STACK_OFFSETS[Math.min(visualIndex, STACK_OFFSETS.length - 1)] ??
+        STACK_OFFSETS[0];
+      const isTop = visualIndex === 0;
+
+      gsap.set(card, {
+        zIndex: count - visualIndex,
+        pointerEvents: isTop ? "auto" : "none",
+      });
+
+      const vars = {
+        x: offset.x,
+        y: offset.y,
+        rotation: offset.rotate,
+        scale: offset.scale,
+        opacity: 1,
+        duration: reduced ? 0 : 0.55,
+        ease: "power3.out",
+      };
+
+      if (reduced) gsap.set(card, vars);
+      else gsap.to(card, vars);
+    });
+  }, [activeIndex, count]);
+
+  const onPointerDown = (event: React.PointerEvent) => {
+    if (event.button !== 0) return;
+    isDragging.current = true;
+    dragStartX.current = event.clientX;
+    dragDeltaX.current = 0;
+    (event.currentTarget as HTMLElement).setPointerCapture(event.pointerId);
+  };
+
+  const onPointerMove = (event: React.PointerEvent) => {
+    if (!isDragging.current || dragStartX.current == null) return;
+    dragDeltaX.current = event.clientX - dragStartX.current;
+
+    const topCard = deckRef.current?.querySelector<HTMLElement>(
+      '[data-testimonial-card][data-stack="0"]',
+    );
+    if (!topCard || prefersReducedMotion()) return;
+
+    gsap.set(topCard, {
+      x: dragDeltaX.current * 0.35,
+      rotation: dragDeltaX.current * 0.04 - 2.5,
+    });
+  };
+
+  const onPointerUp = (event: React.PointerEvent) => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+    (event.currentTarget as HTMLElement).releasePointerCapture(event.pointerId);
+
+    const delta = dragDeltaX.current;
+    dragStartX.current = null;
+    dragDeltaX.current = 0;
+
+    if (Math.abs(delta) > 56) {
+      if (delta < 0) goNext();
+      else goPrev();
+      return;
+    }
+
+    const topCard = deckRef.current?.querySelector<HTMLElement>(
+      '[data-testimonial-card][data-stack="0"]',
+    );
+    if (topCard) {
+      gsap.to(topCard, {
+        x: STACK_OFFSETS[0].x,
+        rotation: STACK_OFFSETS[0].rotate,
+        duration: 0.4,
+        ease: "power3.out",
+      });
+    }
+  };
+
+  const onWheel = (event: React.WheelEvent) => {
+    if (Math.abs(event.deltaY) < 8 && Math.abs(event.deltaX) < 8) return;
+    if (wheelLock.current) return;
+    wheelLock.current = true;
+
+    const delta =
+      Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+    if (delta > 0) goNext();
+    else goPrev();
+
+    window.setTimeout(() => {
+      wheelLock.current = false;
+    }, 450);
+  };
+
+  return (
+    <div className="mx-auto mt-14 w-full max-w-lg sm:mt-16 sm:max-w-xl">
+      <div
+        ref={deckRef}
+        className="relative mx-auto h-[min(420px,62vh)] w-full touch-pan-y select-none sm:h-[460px]"
+        onWheel={onWheel}
+        aria-roledescription="carousel"
+        aria-label="Témoignages clients"
+      >
+        {CARDS.map((card, index) => {
+          const stackPos = (index - activeIndex + count) % count;
+          return (
+            <div
+              key={card.name}
+              data-testimonial-card
+              data-stack={stackPos}
+              className="absolute inset-x-0 top-6 mx-auto w-[min(92vw,380px)] will-change-transform"
+              style={{ zIndex: count - stackPos }}
+              onPointerDown={stackPos === 0 ? onPointerDown : undefined}
+              onPointerMove={stackPos === 0 ? onPointerMove : undefined}
+              onPointerUp={stackPos === 0 ? onPointerUp : undefined}
+              onPointerCancel={stackPos === 0 ? onPointerUp : undefined}
+            >
+              <article
+                className={`rounded-2xl border border-neutral-200/90 bg-white p-6 shadow-[0_20px_50px_rgba(0,0,0,0.08)] sm:p-8 ${
+                  stackPos === 0 ? "cursor-grab active:cursor-grabbing" : ""
+                }`}
+                aria-hidden={stackPos !== 0}
+              >
+                <h3 className="font-[family-name:var(--font-display)] text-xl font-bold uppercase leading-snug tracking-tight text-neutral-950 sm:text-2xl">
+                  {card.quote}
+                </h3>
+                <p className="mt-4 font-sans text-sm leading-relaxed text-neutral-600 sm:text-[15px]">
+                  {card.body}
+                </p>
+                <footer className="mt-6 border-t border-neutral-200 pt-4 font-sans text-xs font-semibold uppercase tracking-wide text-neutral-900 sm:text-sm">
+                  {card.name}
+                  <span className="mt-1 block font-normal normal-case tracking-normal text-neutral-500">
+                    {card.role}
+                  </span>
+                </footer>
+              </article>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="mt-4 flex items-center justify-center gap-4 sm:mt-6">
+        <button
+          type="button"
+          onClick={goPrev}
+          className="flex size-10 items-center justify-center rounded-full border border-neutral-300 bg-white text-neutral-800 transition-colors hover:bg-neutral-950 hover:text-white"
+          aria-label="Témoignage précédent"
+        >
+          <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+            <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
+        <div className="flex items-center gap-2" role="tablist" aria-label="Pagination témoignages">
+          {CARDS.map((card, index) => {
+            const isActive = index === activeIndex;
+            return (
+              <button
+                key={card.name}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-label={`Voir le témoignage de ${card.name}`}
+                onClick={() => goTo(index)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  isActive ? "w-7 bg-[#E24A2E]" : "w-2 bg-neutral-300 hover:bg-neutral-400"
+                }`}
+              />
+            );
+          })}
+        </div>
+
+        <button
+          type="button"
+          onClick={goNext}
+          className="flex size-10 items-center justify-center rounded-full border border-neutral-300 bg-white text-neutral-800 transition-colors hover:bg-neutral-950 hover:text-white"
+          aria-label="Témoignage suivant"
+        >
+          <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+            <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+      </div>
+
+      <p
+        className={`${accentClassName} mt-3 text-center text-sm text-neutral-400`}
+        aria-hidden
+      >
+        Glissez ou faites défiler →
+      </p>
+    </div>
+  );
+}
+
 export function TestimonialsSection({ accentClassName }: TestimonialsSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
   const faqRef = useRef<HTMLDivElement>(null);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
     const header = headerRef.current;
-    const deck = cardsRef.current;
     const faq = faqRef.current;
-    if (!section || !header || !deck) return;
+    if (!section || !header) return;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
-    }
+    if (prefersReducedMotion()) return;
 
-    const wrappers = gsap.utils.toArray<HTMLElement>(
-      deck.querySelectorAll("[data-testimonial-card]"),
-    );
     const faqRows = faq
       ? gsap.utils.toArray<HTMLElement>(faq.querySelectorAll("[data-faq-item]"))
       : [];
@@ -155,32 +368,6 @@ export function TestimonialsSection({ accentClassName }: TestimonialsSectionProp
             toggleActions: "play none none none",
           },
           onComplete: () => gsap.set(header, { clearProps: "willChange" }),
-        },
-      );
-
-      gsap.fromTo(
-        wrappers,
-        {
-          y: 100,
-          opacity: 0,
-          scale: 0.9,
-          willChange: "transform, opacity",
-        },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          duration: 1,
-          stagger: 0.14,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 72%",
-            toggleActions: "play none none none",
-          },
-          onComplete: () => {
-            wrappers.forEach((w) => gsap.set(w, { clearProps: "willChange" }));
-          },
         },
       );
 
@@ -218,7 +405,7 @@ export function TestimonialsSection({ accentClassName }: TestimonialsSectionProp
     <section
       ref={sectionRef}
       id="temoignages"
-      className="section relative bg-[#F4F1EC] px-5 py-24 sm:px-10 sm:py-32 md:py-40"
+      className="section relative bg-[#F4F1EC] px-4 py-20 sm:px-10 sm:py-32 md:py-40"
       aria-labelledby="temoignages-heading"
     >
       <div ref={headerRef} className="mx-auto max-w-4xl text-center">
@@ -231,43 +418,11 @@ export function TestimonialsSection({ accentClassName }: TestimonialsSectionProp
         </h2>
       </div>
 
-      <div
-        ref={cardsRef}
-        className="relative mx-auto mt-16 h-[min(520px,70vh)] w-full max-w-lg sm:h-[560px] sm:max-w-xl"
-      >
-        {CARDS.map((c) => (
-          <div
-            key={c.quote}
-            data-testimonial-card
-            className="absolute inset-x-0 top-[46%] mx-auto w-[min(92vw,380px)]"
-            style={{ zIndex: c.z }}
-          >
-            <article
-              className="rounded-2xl border border-neutral-200/90 bg-white p-6 shadow-[0_20px_50px_rgba(0,0,0,0.08)] sm:p-8"
-              style={{
-                transform: `translate(${c.x}px, ${c.y}px) rotate(${c.rotate}deg)`,
-              }}
-            >
-              <h3 className="font-[family-name:var(--font-display)] text-xl font-bold uppercase leading-snug tracking-tight text-neutral-950 sm:text-2xl">
-                {c.quote}
-              </h3>
-              <p className="mt-4 font-sans text-sm leading-relaxed text-neutral-600 sm:text-[15px]">
-                {c.body}
-              </p>
-              <footer className="mt-6 border-t border-neutral-200 pt-4 font-sans text-xs font-semibold uppercase tracking-wide text-neutral-900 sm:text-sm">
-                {c.name}
-                <span className="mt-1 block font-normal normal-case tracking-normal text-neutral-500">
-                  {c.role}
-                </span>
-              </footer>
-            </article>
-          </div>
-        ))}
-      </div>
+      <TestimonialDeck accentClassName={accentClassName} />
 
       <div
         ref={faqRef}
-        className="mx-auto mt-28 w-full max-w-2xl space-y-2 sm:mt-36"
+        className="mx-auto mt-24 w-full max-w-2xl space-y-2 sm:mt-32"
         aria-labelledby="faq-heading"
       >
         <h3

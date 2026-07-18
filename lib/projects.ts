@@ -27,7 +27,7 @@ export const portfolioProjects: PortfolioProject[] = [
         height: 1490,
       },
     ],
-    href: "#contact",
+    href: "https://duo.nodes-hub.com/",
   },
   {
     num: "02",
@@ -35,10 +35,13 @@ export const portfolioProjects: PortfolioProject[] = [
     description:
       "Un site web pour une entreprise qui travaille dans l’automatisation et la transformation digitale.",
     images: [
-      { src: "/romel.jpg", alt: "Nodes Technology — page d’accueil" },
-      { src: "/Ro.jpg", alt: "Nodes Technology — section services" },
-      { src: "/rome.png", alt: "Nodes Technology — détail interface" },
+      {
+        src: "/nodes.png",
+        alt: "Nodes Technology — site web automatisation et transformation digitale",
+        width: 2594,
+        height: 1490,
+      },
     ],
-    href: "#contact",
+    href: "https://nodes-hub.com/",
   },
 ];
