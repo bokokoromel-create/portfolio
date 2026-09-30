@@ -23,19 +23,15 @@ export function AboutPreviewSection({ accentClassName }: AboutPreviewSectionProp
           <figure className="reveal relative w-[min(100%,240px)] rotate-[-4deg] shadow-[8px_16px_40px_rgba(0,0,0,0.12)] sm:w-[min(100%,300px)]">
             <div className="bg-white p-3 pb-10 sm:p-4 sm:pb-12">
               <div className="relative aspect-[4/5] w-full overflow-hidden bg-neutral-200">
-                <picture className="absolute inset-0 block h-full w-full">
-                  <source srcSet="/ro.HEIC" type="image/heic" />
-                  <source srcSet="/ro.HEIC" type="image/heif" />
-                  <img
-                    src="/Ro.jpg"
-                    alt="Portrait — Romel Matsonda"
-                    width={760}
-                    height={950}
-                    className="h-full w-full object-cover object-center"
-                    decoding="async"
-                    loading="lazy"
-                  />
-                </picture>
+                <img
+                  src="/bg.png"
+                  alt="Portrait — Romel Matsonda"
+                  width={1086}
+                  height={1448}
+                  className="absolute inset-0 h-full w-full object-cover object-center"
+                  decoding="async"
+                  loading="lazy"
+                />
               </div>
             </div>
           </figure>

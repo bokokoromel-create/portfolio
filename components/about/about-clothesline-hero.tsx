@@ -11,7 +11,7 @@ const POLAROIDS = [
     offset: "translate-y-4 sm:translate-y-10",
   },
   {
-    src: "/Ro.jpg",
+    src: "/bg.png",
     alt: "Portrait — Romel Matsonda",
     restAngle: 0,
     offset: "translate-y-0",
