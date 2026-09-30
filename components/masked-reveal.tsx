@@ -53,12 +53,12 @@ export function MaskedRevealLines({
     if (!inners.length) return;
 
     if (prefersReducedMotion()) {
-      gsap.set(inners, { yPercent: 0 });
+      gsap.set(inners, { y: 0, yPercent: 0 });
       return;
     }
 
     const ctx = gsap.context(() => {
-      gsap.set(inners, { yPercent: 100 });
+      gsap.set(inners, { y: 0, yPercent: 100 });
       gsap.to(inners, {
         yPercent: 0,
         duration,
@@ -111,12 +111,12 @@ export function MaskedRevealWords({
     if (!inners.length) return;
 
     if (prefersReducedMotion()) {
-      gsap.set(inners, { yPercent: 0 });
+      gsap.set(inners, { y: 0, yPercent: 0 });
       return;
     }
 
     const ctx = gsap.context(() => {
-      gsap.set(inners, { yPercent: 100 });
+      gsap.set(inners, { y: 0, yPercent: 100 });
       gsap.to(inners, {
         yPercent: 0,
         duration,
@@ -181,7 +181,7 @@ export function MaskedRevealChars({
 
     if (prefersReducedMotion()) {
       if (active === undefined) {
-        gsap.set(inners, { yPercent: 0 });
+        gsap.set(inners, { y: 0, yPercent: 0 });
       } else {
         gsap.set(inners, {
           yPercent: 0,
@@ -193,7 +193,7 @@ export function MaskedRevealChars({
 
     if (active === undefined) {
       const ctx = gsap.context(() => {
-        gsap.set(inners, { yPercent: 100 });
+        gsap.set(inners, { y: 0, yPercent: 100 });
         gsap.to(inners, {
           yPercent: 0,
           duration,
@@ -208,13 +208,13 @@ export function MaskedRevealChars({
     gsap.killTweensOf(inners);
 
     if (!active) {
-      gsap.set(inners, { yPercent: 100 });
+      gsap.set(inners, { y: 0, yPercent: 100 });
       return;
     }
 
     gsap.fromTo(
       inners,
-      { yPercent: 100 },
+      { y: 0, yPercent: 100 },
       {
         yPercent: 0,
         duration,

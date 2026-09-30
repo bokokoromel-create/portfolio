@@ -36,7 +36,7 @@ const tagline =
 export default function Home() {
   return (
     <div
-      className={`${display.variable} ${accent.variable} relative min-h-dvh overflow-x-hidden bg-[#F2EFE9] text-neutral-950`}
+      className={`${display.variable} ${accent.variable} relative min-h-dvh overflow-x-clip bg-[#F2EFE9] text-neutral-950`}
     >
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[45vh] bg-gradient-to-t from-[#E24A2E] from-15% via-[#F2EFE9]/80 via-55% to-transparent"

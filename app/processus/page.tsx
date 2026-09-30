@@ -28,7 +28,7 @@ export const metadata = {
 export default function ProcessusPage() {
   return (
     <div
-      className={`${display.variable} ${accent.variable} relative min-h-dvh overflow-x-hidden bg-[#F2ECE4] text-neutral-950`}
+      className={`${display.variable} ${accent.variable} relative min-h-dvh overflow-x-clip bg-[#F2ECE4] text-neutral-950`}
     >
       <SiteHeader nav={mainNav} />
       <ProcessHero accentClassName={accent.className} />

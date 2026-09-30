@@ -9,6 +9,8 @@ import {
 } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { TextRise } from "../motion/text-rise";
+import { useMediaQuery } from "../motion/use-media-query";
 import { SiteLogo } from "../site-logo";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -112,6 +114,114 @@ const STACK_OFFSETS = [
 function prefersReducedMotion() {
   if (typeof window === "undefined") return false;
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function CardContent({ card }: { card: Card }) {
+  return (
+    <>
+      <h3 className="font-[family-name:var(--font-display)] text-xl font-bold uppercase leading-snug tracking-tight text-neutral-950 sm:text-2xl">
+        {card.quote}
+      </h3>
+      <p className="mt-4 font-sans text-sm leading-relaxed text-neutral-600 sm:text-[15px]">
+        {card.body}
+      </p>
+      <footer className="mt-6 border-t border-neutral-200 pt-4 font-sans text-xs font-semibold uppercase tracking-wide text-neutral-900 sm:text-sm">
+        {card.name}
+        <span className="mt-1 block font-normal normal-case tracking-normal text-neutral-500">
+          {card.role}
+        </span>
+      </footer>
+    </>
+  );
+}
+
+/** Rotation de repos de chaque carte empilée. */
+const STACK_ROTATIONS = [-3, 12, -6, 7, -5, 2];
+
+/**
+ * Desktop : les cartes arrivent une à une au scroll (section collante),
+ * les précédentes reculent vers le haut à gauche.
+ */
+function StackedTestimonials({ heading }: { heading: ReactNode }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const ctx = gsap.context(() => {
+      const cards = gsap.utils.toArray<HTMLElement>("[data-stack-card]", container);
+      const count = cards.length;
+
+      cards.forEach((card, i) => {
+        gsap.set(card, {
+          rotation: STACK_ROTATIONS[i] ?? 0,
+          x: 0,
+          y: () => window.innerHeight,
+        });
+      });
+
+      const tl = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: container,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      cards.forEach((card, i) => {
+        tl.to(card, { y: 0, duration: 1 }, i);
+        if (i < count - 1) {
+          const reach = 1 - i * 0.15;
+          tl.to(
+            card,
+            {
+              x: () => -window.innerWidth * 0.15 * reach,
+              y: () => -window.innerHeight * 0.15 * reach,
+              duration: count - i - 1,
+            },
+            i + 1,
+          );
+        }
+      });
+    }, container);
+
+    // La hauteur de la section change par rapport au rendu serveur (deck).
+    const raf = requestAnimationFrame(() => ScrollTrigger.refresh());
+
+    return () => {
+      cancelAnimationFrame(raf);
+      ctx.revert();
+    };
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative"
+      style={{ height: `${(CARDS.length + 1) * 100}svh` }}
+      aria-roledescription="carousel"
+      aria-label="Témoignages clients"
+    >
+      <div className="sticky top-0 flex h-svh flex-col pb-6 pt-20 sm:pb-10 sm:pt-24">
+        {heading}
+        <div className="relative flex-1">
+          {CARDS.map((card) => (
+            <article
+              key={card.name}
+              data-stack-card
+              className="absolute left-1/2 top-1/2 w-[min(86vw,24rem)] -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-neutral-200/90 bg-white p-6 shadow-[0_20px_50px_rgba(0,0,0,0.08)] will-change-transform sm:p-8 md:w-[clamp(20rem,32vw,28rem)]"
+            >
+              <CardContent card={card} />
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function TestimonialDeck({ accentClassName }: { accentClassName: string }) {
@@ -264,18 +374,7 @@ function TestimonialDeck({ accentClassName }: { accentClassName: string }) {
                 }`}
                 aria-hidden={stackPos !== 0}
               >
-                <h3 className="font-[family-name:var(--font-display)] text-xl font-bold uppercase leading-snug tracking-tight text-neutral-950 sm:text-2xl">
-                  {card.quote}
-                </h3>
-                <p className="mt-4 font-sans text-sm leading-relaxed text-neutral-600 sm:text-[15px]">
-                  {card.body}
-                </p>
-                <footer className="mt-6 border-t border-neutral-200 pt-4 font-sans text-xs font-semibold uppercase tracking-wide text-neutral-900 sm:text-sm">
-                  {card.name}
-                  <span className="mt-1 block font-normal normal-case tracking-normal text-neutral-500">
-                    {card.role}
-                  </span>
-                </footer>
+                <CardContent card={card} />
               </article>
             </div>
           );
@@ -337,15 +436,16 @@ function TestimonialDeck({ accentClassName }: { accentClassName: string }) {
 
 export function TestimonialsSection({ accentClassName }: TestimonialsSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
   const faqRef = useRef<HTMLDivElement>(null);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
+  // Empilement au scroll sur tous les écrans ; le deck swipeable reste le
+  // repli quand l'utilisateur préfère réduire les animations.
+  const stacked = useMediaQuery("(prefers-reduced-motion: no-preference)");
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
-    const header = headerRef.current;
     const faq = faqRef.current;
-    if (!section || !header) return;
+    if (!section) return;
 
     if (prefersReducedMotion()) return;
 
@@ -354,23 +454,6 @@ export function TestimonialsSection({ accentClassName }: TestimonialsSectionProp
       : [];
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        header,
-        { y: 36, opacity: 0, willChange: "transform, opacity" },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.75,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 78%",
-            toggleActions: "play none none none",
-          },
-          onComplete: () => gsap.set(header, { clearProps: "willChange" }),
-        },
-      );
-
       if (faqRows.length && faq) {
         gsap.fromTo(
           faqRows,
@@ -397,6 +480,21 @@ export function TestimonialsSection({ accentClassName }: TestimonialsSectionProp
     return () => ctx.revert();
   }, []);
 
+  const heading = (
+    <div className="mx-auto max-w-4xl text-center">
+      <TextRise
+        as="h2"
+        id="temoignages-heading"
+        className="font-[family-name:var(--font-display)] text-[clamp(2.2rem,8vw,4.5rem)] font-black uppercase leading-[0.95] tracking-tight text-neutral-950"
+      >
+        Ils ont dit{" "}
+        <span data-confetti className={`${accentClassName} text-[#E24A2E]`}>
+          « oui ! »
+        </span>
+      </TextRise>
+    </div>
+  );
+
   const toggleFaq = (index: number) => {
     setOpenFaqIndex((prev) => (prev === index ? null : index));
   };
@@ -408,17 +506,14 @@ export function TestimonialsSection({ accentClassName }: TestimonialsSectionProp
       className="section relative bg-[#F4F1EC] px-4 py-20 sm:px-10 sm:py-32 md:py-40"
       aria-labelledby="temoignages-heading"
     >
-      <div ref={headerRef} className="mx-auto max-w-4xl text-center">
-        <h2
-          id="temoignages-heading"
-          className="font-[family-name:var(--font-display)] text-[clamp(2.2rem,8vw,4.5rem)] font-black uppercase leading-[0.95] tracking-tight text-neutral-950"
-        >
-          Ils ont dit{" "}
-          <span className={`${accentClassName} text-[#E24A2E]`}>« oui ! »</span>
-        </h2>
-      </div>
-
-      <TestimonialDeck accentClassName={accentClassName} />
+      {stacked ? (
+        <StackedTestimonials heading={heading} />
+      ) : (
+        <>
+          {heading}
+          <TestimonialDeck accentClassName={accentClassName} />
+        </>
+      )}
 
       <div
         ref={faqRef}

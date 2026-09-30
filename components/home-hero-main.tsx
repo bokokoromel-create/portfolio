@@ -20,6 +20,11 @@ const MIN_STAMP_DISTANCE = 52;
 const MAX_STAMPS = 36;
 /** Texte affiché sur chaque tampon au curseur. */
 const STAMP_TEXT = "Oui !";
+const STAMP_LETTERS = Array.from(STAMP_TEXT);
+/** Décalage entre chaque lettre qui « poppe ». */
+const LETTER_STAGGER_S = 0.05;
+/** Pause (pop + tenue) avant la chute du tampon. */
+const FALL_DELAY_S = 0.8;
 
 type Stamp = {
   id: string;
@@ -91,8 +96,8 @@ export function HomeHeroMain({
       lastSpawnRef.current = { x, y };
 
       const id = `oui-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-      const r = (Math.random() - 0.5) * 36;
-      const s = 0.82 + Math.random() * 0.34;
+      const r = (Math.random() - 0.7) * 60;
+      const s = 0.8 + Math.random() * 0.7;
 
       setStamps((prev) => [...prev.slice(-(MAX_STAMPS - 1)), { id, x, y, r, s }]);
     },
@@ -138,7 +143,7 @@ export function HomeHeroMain({
     }
     pendingRef.current = null;
     lastSpawnRef.current = null;
-    setStamps([]);
+    // Les tampons déjà posés terminent leur chute, puis se retirent seuls.
   }, []);
 
   return (
@@ -178,10 +183,21 @@ export function HomeHeroMain({
           aria-hidden
         >
           <span
-            className={`oui-stamp-label ${accentClassName} block whitespace-nowrap text-3xl text-[#E24A2E] sm:text-5xl md:text-6xl`}
-            onAnimationEnd={() => removeStamp(id)}
+            className={`oui-stamp-fall ${accentClassName} block whitespace-nowrap text-3xl text-[#E24A2E] sm:text-5xl md:text-6xl`}
+            style={{ animationDelay: `${FALL_DELAY_S + STAMP_LETTERS.length * LETTER_STAGGER_S}s` }}
+            onAnimationEnd={(event) => {
+              if (event.animationName === "oui-stamp-fall") removeStamp(id);
+            }}
           >
-            {STAMP_TEXT}
+            {STAMP_LETTERS.map((letter, i) => (
+              <span
+                key={i}
+                className="oui-stamp-letter"
+                style={{ animationDelay: `${i * LETTER_STAGGER_S}s` }}
+              >
+                {letter === " " ? " " : letter}
+              </span>
+            ))}
           </span>
         </div>
       ))}
@@ -192,6 +208,12 @@ export function HomeHeroMain({
         onPointerEnter={(e) => onPointerIn(e.clientX, e.clientY)}
         onPointerDown={(e) => onPointerIn(e.clientX, e.clientY)}
         onPointerMove={(e) => queuePointer(e.clientX, e.clientY, false)}
+        // Tactile : les évènements pointer s'arrêtent dès que le scroll démarre,
+        // touchmove continue — les tampons suivent le doigt pendant le défilement.
+        onTouchMove={(e) => {
+          const touch = e.touches[0];
+          if (touch) queuePointer(touch.clientX, touch.clientY, false);
+        }}
         onPointerLeave={clearPointer}
         onPointerCancel={clearPointer}
         aria-hidden

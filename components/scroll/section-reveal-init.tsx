@@ -38,18 +38,20 @@ export function SectionRevealInit() {
             : 44
           : 0;
 
+        // Marge horizontale négative : le masque ne coupe que verticalement,
+        // les éléments qui débordent sur les côtés (ex. « Vérifier ») restent entiers.
         const fromVars = isEditorial
           ? {
               x: slideX,
               y: 52,
               opacity: 0,
-              clipPath: "inset(100% 0 0 0)",
+              clipPath: "inset(100% -25% 0 -25%)",
               filter: "blur(10px)",
             }
           : {
               y: 60,
               opacity: 0,
-              clipPath: "inset(100% 0 0 0)",
+              clipPath: "inset(100% -25% 0 -25%)",
             };
 
         const toVars = isEditorial
@@ -57,7 +59,7 @@ export function SectionRevealInit() {
               x: 0,
               y: 0,
               opacity: 1,
-              clipPath: "inset(0% 0 0 0)",
+              clipPath: "inset(0% -25% 0 -25%)",
               filter: "blur(0px)",
               duration: 1.12,
               stagger: 0.12,
@@ -70,13 +72,14 @@ export function SectionRevealInit() {
                 toggleActions: "play none none none",
               },
               onComplete: () => {
-                gsap.set(elements, { clearProps: "filter,x" });
+                // Le clip-path final rognerait les éléments qui débordent (ex. « Vérifier »).
+                gsap.set(elements, { clearProps: "filter,x,clipPath" });
               },
             }
           : {
               y: 0,
               opacity: 1,
-              clipPath: "inset(0% 0 0 0)",
+              clipPath: "inset(0% -25% 0 -25%)",
               duration: 1,
               stagger: 0.1,
               ease: "power3.out",
@@ -86,6 +89,9 @@ export function SectionRevealInit() {
                 start: "top 80%",
                 end: "top 30%",
                 toggleActions: "play none none none",
+              },
+              onComplete: () => {
+                gsap.set(elements, { clearProps: "clipPath" });
               },
             };
 

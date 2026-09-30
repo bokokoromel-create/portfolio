@@ -28,7 +28,7 @@ export const metadata = {
 export default function AProposPage() {
   return (
     <div
-      className={`${display.variable} ${accent.variable} relative min-h-dvh overflow-x-hidden bg-[#E24A2E] text-neutral-950`}
+      className={`${display.variable} ${accent.variable} relative min-h-dvh overflow-x-clip bg-[#E24A2E] text-neutral-950`}
     >
       <SiteHeader nav={mainNav} />
       <AboutClotheslineHero />

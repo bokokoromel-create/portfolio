@@ -14,6 +14,7 @@ export function WorkWithMeCtaSection({
   return (
     <section
       id="contact"
+      data-theme-section="dark"
       className="section relative flex min-h-[min(80svh,760px)] flex-col bg-black px-4 pb-[max(4rem,calc(4rem+env(safe-area-inset-bottom,0px)))] pt-16 text-white sm:min-h-[min(90svh,880px)] sm:px-10 sm:pb-[max(7rem,calc(7rem+env(safe-area-inset-bottom,0px)))] sm:pt-28"
       aria-labelledby="contact-cta-heading"
     >
@@ -30,6 +31,7 @@ export function WorkWithMeCtaSection({
           <span className="reveal mt-1 block sm:mt-2">
             Entendre plus de{" "}
             <span
+              data-confetti
               className={`${accentClassName} normal-case text-[clamp(2.25rem,10vw,6rem)] tracking-normal text-[#E24A2E]`}
             >
               « OUI »

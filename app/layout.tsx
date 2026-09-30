@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ConfettiLayer } from "../components/motion/confetti-layer";
 import { NavigationLoadProvider } from "../components/navigation-load-provider";
 import { SmoothScrollProvider } from "../components/scroll/smooth-scroll-provider";
 import "./globals.css";
@@ -33,6 +34,7 @@ export default function RootLayout({
         <NavigationLoadProvider>
           <SmoothScrollProvider>{children}</SmoothScrollProvider>
         </NavigationLoadProvider>
+        <ConfettiLayer />
       </body>
     </html>
   );

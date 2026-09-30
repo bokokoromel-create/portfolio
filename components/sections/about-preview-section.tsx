@@ -1,4 +1,6 @@
+import { FitText } from "../motion/fit-text";
 import { SiteLogo } from "../site-logo";
+import { AboutPolaroid } from "./about-polaroid";
 
 type AboutPreviewSectionProps = {
   accentClassName: string;
@@ -12,28 +14,19 @@ export function AboutPreviewSection({ accentClassName }: AboutPreviewSectionProp
       aria-labelledby="about-preview-heading"
     >
       <div className="relative mx-auto max-w-6xl">
-        <h2
+        <FitText
           id="about-preview-heading"
-          className="reveal relative z-10 text-center font-[family-name:var(--font-display)] text-[clamp(2.5rem,12vw,10.5rem)] font-black uppercase leading-[0.88] tracking-tight text-neutral-950 sm:text-[clamp(3.25rem,15vw,10.5rem)]"
+          className="reveal relative z-10 mx-auto text-center font-[family-name:var(--font-display)] text-[clamp(2.5rem,12vw,10.5rem)] font-black uppercase leading-[0.88] tracking-tight text-neutral-950 sm:text-[clamp(3.25rem,15vw,10.5rem)]"
         >
           À propos
-        </h2>
+        </FitText>
 
         <div className="relative z-[1] mx-auto mt-6 flex justify-center px-2 sm:mt-10">
-          <figure className="reveal relative w-[min(100%,240px)] rotate-[-4deg] shadow-[8px_16px_40px_rgba(0,0,0,0.12)] sm:w-[min(100%,300px)]">
-            <div className="bg-white p-3 pb-10 sm:p-4 sm:pb-12">
-              <div className="relative aspect-[4/5] w-full overflow-hidden bg-neutral-200">
-                <img
-                  src="/bg.png"
-                  alt="Portrait — Romel Matsonda"
-                  width={1086}
-                  height={1448}
-                  className="absolute inset-0 h-full w-full object-cover object-center"
-                  decoding="async"
-                  loading="lazy"
-                />
-              </div>
-            </div>
+          <figure className="reveal relative w-[min(100%,240px)] rotate-[-4deg] sm:w-[min(100%,300px)]">
+            <AboutPolaroid
+              src="/bg.png"
+              alt="Portrait — Romel Matsonda"
+            />
           </figure>
         </div>
       </div>
@@ -51,7 +44,7 @@ export function AboutPreviewSection({ accentClassName }: AboutPreviewSectionProp
           embrouillent tout le monde, et personne n’ose s’engager. Je conçois des
           sites qui communiquent clairement, inspirent confiance et donnent
           envie de dire{" "}
-          <span className={`${accentClassName} text-lg text-[#E24A2E]`}>
+          <span data-confetti className={`${accentClassName} text-lg text-[#E24A2E]`}>
             « oui »
           </span>
           .

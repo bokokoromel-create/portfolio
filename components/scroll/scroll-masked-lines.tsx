@@ -60,13 +60,18 @@ export function ScrollMaskedLines({
     if (!inners.length) return;
 
     if (prefersReducedMotion()) {
-      gsap.set(inners, { yPercent: 0 });
+      gsap.set(inners, { y: 0, yPercent: 0 });
       return;
     }
 
     const ctx = gsap.context(() => {
-      gsap.set(inners, { yPercent: 100 });
+      // 120 % : les glyphes hauts (Caveat) ne dépassent pas du masque avant l'animation.
+      // `y: 0` explicite : si GSAP a relu un transform existant (ex. arrivée via la
+      // transition de page), il le convertit en `y` px qui s'ajouterait au yPercent
+      // et laisserait la ligne cachée sous son masque.
+      gsap.set(inners, { y: 0, yPercent: 120 });
       gsap.to(inners, {
+        y: 0,
         yPercent: 0,
         duration,
         ease: "power4.out",

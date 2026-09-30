@@ -34,31 +34,51 @@ html.lenis body {
   scroll-behavior: auto !important;
 }
 
-/* Tampons « Oui ! » au curseur (style trail type hero portfolio) */
-@keyframes oui-stamp-pop {
-  0% {
+/* Tampons « Oui ! » au curseur : lettres qui « poppent » puis chute. */
+@keyframes oui-letter-pop {
+  from {
     opacity: 0;
-    transform: scale(0.4);
+    transform: scale(0);
   }
-  14% {
-    opacity: 1;
-    transform: scale(1.12);
-  }
-  24% {
-    transform: scale(1);
-  }
-  70% {
+  to {
     opacity: 1;
     transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.9);
   }
 }
 
-.oui-stamp-label {
-  animation: oui-stamp-pop 1.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+@keyframes oui-stamp-fall {
+  to {
+    opacity: 0;
+    transform: translateY(200px);
+  }
+}
+
+.oui-stamp-letter {
+  display: inline-block;
+  opacity: 0;
+  animation: oui-letter-pop 0.3s cubic-bezier(0.34, 1.7, 0.64, 1) forwards;
+}
+
+.oui-stamp-fall {
+  animation: oui-stamp-fall 1.5s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+}
+
+/* Texte révélé mot par mot (TextRise) : caché tant que le split n'est pas prêt. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-text-rise]:not([data-text-ready]) {
+    visibility: hidden;
+  }
+}
+
+/* Marge pour ne pas rogner jambages, accents et glyphes penchés (Caveat)
+   dans les masques de mots. */
+.rise-word-mask {
+  padding: 0.25em 0.2em;
+  margin: -0.25em -0.2em;
+}
+
+[data-confetti] {
+  cursor: pointer;
 }
 
 @keyframes load-ring-spin {
@@ -73,7 +93,12 @@ html.lenis body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-load-ring-spin {
+  .animate-load-ring-spin,
+  .oui-stamp-fall {
     animation: none;
+  }
+  .oui-stamp-letter {
+    animation: none;
+    opacity: 1;
   }
 }

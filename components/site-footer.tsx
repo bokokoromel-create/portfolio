@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FooterGlow, FooterName } from "./footer-motion";
 import { SlideDoubleLabel } from "./slide-double-label";
 
 export type FooterNavItem = { href: string; label: string };
@@ -29,9 +30,10 @@ export function SiteFooter({
 
   return (
     <footer
-      className="section relative overflow-hidden bg-[linear-gradient(180deg,#F2EFE9_0%,#F2EFE9_24%,#e8b09c_52%,#E24A2E_92%,#c73d24_100%)] text-neutral-950"
+      className="section relative isolate overflow-hidden bg-[#F2EFE9] text-neutral-950"
       aria-labelledby="footer-name-heading"
     >
+      <FooterGlow className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#F2EFE9_0%,#F2EFE9_24%,#e8b09c_52%,#E24A2E_92%,#c73d24_100%)]" />
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-5 pb-[max(2.5rem,calc(2.5rem+env(safe-area-inset-bottom,0px)))] pt-14 sm:px-8 md:grid-cols-3 md:gap-10 md:pb-[max(1.5rem,calc(1.5rem+env(safe-area-inset-bottom,0px)))]">
         <div className="reveal">
           <p className="mb-5 font-sans text-[10px] font-semibold uppercase tracking-[0.28em] text-neutral-600 sm:text-xs">
@@ -88,12 +90,12 @@ export function SiteFooter({
       </div>
 
       <div className="relative px-5 pb-[max(1.5rem,calc(1.5rem+env(safe-area-inset-bottom,0px)))] sm:px-8">
-        <h2
+        <FooterName
           id="footer-name-heading"
-          className="reveal mx-auto max-w-[100vw] text-center font-[family-name:var(--font-display)] text-[clamp(2.75rem,12vw,9.5rem)] font-normal uppercase leading-[0.88] tracking-tight text-neutral-950"
+          className="mx-auto max-w-[100vw] text-center font-[family-name:var(--font-display)] text-[clamp(2.75rem,12vw,9.5rem)] font-normal uppercase leading-[0.88] tracking-tight text-neutral-950"
         >
           Romel Matsonda
-        </h2>
+        </FooterName>
 
         <div className="reveal mx-auto mt-16 max-w-6xl border-t border-white/25 pt-8 font-sans text-[11px] text-white/95 sm:text-xs md:mt-24 md:pt-10">
           <p>©2026 Romel Matsonda</p>
