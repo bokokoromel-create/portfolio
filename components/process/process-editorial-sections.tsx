@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ScrollMaskedLines } from "../scroll/scroll-masked-lines";
 
 type ColBlock = {
@@ -291,15 +292,20 @@ export function ProcessEditorialSections({
               C&apos;est littéralement moi, en tant que chef d&apos;entreprise, qui
               dis tout ça.
             </p>
-            <div
-              className="relative max-w-[220px] rotate-[-3deg] border border-black/15 bg-white/60 p-3 shadow-sm"
-              aria-hidden
-            >
-              <div className="aspect-[3/4] w-full rounded-sm bg-gradient-to-br from-neutral-200 to-neutral-300" />
-              <p className="mt-2 font-sans text-[10px] uppercase tracking-wider text-neutral-500">
-                Illustration — remplace par ton visuel
-              </p>
-            </div>
+            <figure className="relative max-w-[220px] rotate-[-3deg] border border-black/15 bg-white/60 p-3 shadow-sm">
+              <div className="relative aspect-[3/4] w-full overflow-hidden rounded-sm bg-neutral-200">
+                <Image
+                  src="/bg.png"
+                  alt="Portrait — Romel Matsonda"
+                  fill
+                  className="object-cover object-top"
+                  sizes="220px"
+                />
+              </div>
+              <figcaption className="mt-2 font-sans text-[10px] uppercase tracking-wider text-neutral-500">
+                Romel Matsonda
+              </figcaption>
+            </figure>
           </div>
           <div className="grid gap-12 md:grid-cols-2 md:gap-16 lg:col-span-8 lg:gap-24">
             <Col
