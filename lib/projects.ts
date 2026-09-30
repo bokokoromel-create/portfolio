@@ -21,7 +21,7 @@ export const portfolioProjects: PortfolioProject[] = [
       "La plateforme d’agents IA qui aide les entrepreneurs à vendre, répondre et organiser leur activité sur WhatsApp.",
     images: [
       {
-        src: "/duo.png",
+        src: "/duo-2026.png",
         alt: "DUO — plateforme d’agents IA sur WhatsApp",
         width: 2594,
         height: 1490,
